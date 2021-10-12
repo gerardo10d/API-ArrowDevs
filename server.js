@@ -20,9 +20,26 @@ app.get("/vehiculos", (req, res)=>{
 
 // Tipo POST
 app.post("/vehiculos/nuevo", (req, res)=>{
-    // Implementar código para crear vehículo en la BD
-    console.log("Vehículo a crear ", req.body)
-    res.send('Ok. Vehículo creado')
+    
+    console.log(req);
+    const datosVehiculo = req.body;
+    console.log('llaves: ', Object.keys(datosVehiculo));
+    try{
+        if (
+            Object.keys(datosVehiculo).includes('name') && 
+            Object.keys(datosVehiculo).includes('brand') &&
+            Object.keys(datosVehiculo).includes('model')
+        ){
+            // Implementar código para crear vehículo en la BD
+            // res.send('Ok. Vehículo creado')
+            res.sendStatus(200); // Status 200 es de operación exitosa
+        } else{
+            res.sendStatus(500); // Status 500 es para operación no exitosa
+        }
+    } catch{
+        res.sendStatus(500);
+    }
+
 })
 
 // Prender la aplicación, escuchar solicitudes en un puerto específico del servidor
